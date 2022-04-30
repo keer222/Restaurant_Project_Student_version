@@ -1,11 +1,12 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
@@ -19,6 +20,7 @@ class RestaurantTest {
         restaurant = new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
+        restaurant.addToMenu("Sizzling Brownie", 319);
     }
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     //-------FOR THE 2 TESTS BELOW, YOU MAY USE THE CONCEPT OF MOCKING, IF YOU RUN INTO ANY TROUBLE
@@ -58,4 +60,27 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //>>>>>>>>>>>>>>>>>>>>Calculate Order Value<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void adding_menu_items_should_calculate_the_total_order_value() {
+        List<String> selectedItemNames = new ArrayList<>();
+        selectedItemNames.add("Sweet corn soup");
+        selectedItemNames.add("Vegetable lasagne");
+        int expectedOrderValue = 0;
+        for(Item item:restaurant.getMenu())
+            if(selectedItemNames.contains(item.getName()))
+                expectedOrderValue += item.getPrice();
+        int actualOrderValue = restaurant.calculateOrderValue(selectedItemNames);
+        assertEquals(expectedOrderValue, actualOrderValue);
+    }
+
+    @Test
+    public void order_value_0_when_no_item_selected_by_user() {
+        List<String> selectedItemNames = new ArrayList<>();
+        int expectedOrderValue = 0;
+        int actualOrderValue = restaurant.calculateOrderValue(selectedItemNames);
+        assertEquals(expectedOrderValue, actualOrderValue);
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<Calculate Order Value>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
