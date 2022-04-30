@@ -10,7 +10,7 @@ public class RestaurantService {
             if(restaurant.getName().equalsIgnoreCase(restaurantName))
                 return restaurant;
             else
-                throw new restaurantNotFoundException("Restaurant Not Found!");
+                throw new restaurantNotFoundException("Error: Restaurant could not be found");
         return null;
     }
 
