@@ -14,7 +14,6 @@ public class RestaurantService {
         return null;
     }
 
-
     public Restaurant addRestaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         Restaurant newRestaurant = new Restaurant(name, location, openingTime, closingTime);
         restaurants.add(newRestaurant);
@@ -30,4 +29,5 @@ public class RestaurantService {
     public List<Restaurant> getRestaurants() {
         return restaurants;
     }
+
 }
